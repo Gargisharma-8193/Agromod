@@ -1,0 +1,19 @@
+.about{
+    padding:80px 20px;
+}
+
+.about h2{
+    color:#198754;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+.about p{
+    line-height:1.8;
+    color:#555;
+    margin-bottom:15px;
+}
+
+.about img{
+    border-radius:15px;
+}

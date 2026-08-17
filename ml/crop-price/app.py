@@ -5,6 +5,7 @@ import pandas as pd
 from datetime import datetime
 import crops
 import random
+import os
 
 app = Flask(__name__)
 app.config['CORS_HEADERS'] = 'Content-Type'
@@ -464,7 +465,11 @@ if __name__ == "__main__":
     wheat = Commodity(commodity_dict["wheat"])
     commodity_list.append(wheat)
 
-    app.run(host="127.0.0.1", port=5050, debug=True)
+    app.run(
+    host="0.0.0.0",
+    port=int(os.environ.get("PORT", 5050)),
+    debug=False
+)
 
 
 

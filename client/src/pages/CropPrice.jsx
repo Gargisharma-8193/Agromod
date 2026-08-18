@@ -4,7 +4,7 @@ function CropPrice() {
       <h1>🌾 Crop Price Prediction</h1>
 
       <iframe
-        src="http://127.0.0.1:5050"
+        src="https://gargisharmacs23.pythonanywhere.com/"
         width="100%"
         height="700px"
         style={{

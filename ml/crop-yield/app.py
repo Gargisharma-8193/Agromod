@@ -1,13 +1,16 @@
 from flask import Flask, request, render_template
 import numpy as np
 import pickle
-import sklearn
+import os
 
-print(sklearn.__version__)
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Load models
-dtr = pickle.load(open("dtr.pkl", "rb"))
-preprocessor = pickle.load(open("preprocessor.pkl", "rb"))
+with open(os.path.join(BASE_DIR, "dtr.pkl"), "rb") as f:
+    dtr = pickle.load(f)
+
+with open(os.path.join(BASE_DIR, "preprocessor.pkl"), "rb") as f:
+    preprocessor = pickle.load(f)
 
 # Flask app
 app = Flask(__name__)
@@ -20,6 +23,7 @@ def index():
 
 @app.route("/predict", methods=["POST"])
 def predict():
+
     Year = request.form["Year"]
     average_rain_fall_mm_per_year = request.form["average_rain_fall_mm_per_year"]
     pesticides_tonnes = request.form["pesticides_tonnes"]
@@ -40,13 +44,10 @@ def predict():
     )
 
     transformed_features = preprocessor.transform(features)
+
     prediction = dtr.predict(transformed_features)
 
     return render_template(
         "index.html",
         prediction=prediction[0]
     )
-
-
-if __name__ == "__main__":
-    app.run(host="127.0.0.1", port=5002, debug=True)

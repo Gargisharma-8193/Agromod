@@ -4,7 +4,7 @@ function CropYield() {
       <h1>🌾 Crop Yield Prediction</h1>
 
       <iframe
-        src="http://127.0.0.1:5002"
+        src="https://gargisharmacs23.pythonanywhere.com/crop-yield/"
         width="100%"
         height="800px"
         style={{

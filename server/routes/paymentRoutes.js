@@ -8,9 +8,16 @@ const router = express.Router();
 // RAZORPAY CONFIGURATION
 // ======================================================
 
+const keyId = process.env.RAZORPAY_KEY_ID;
+const keySecret = process.env.RAZORPAY_KEY_SECRET;
+
+if (!keyId || !keySecret) {
+  throw new Error("Razorpay environment variables are missing");
+}
+
 const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID.trim(),
-  key_secret: process.env.RAZORPAY_KEY_SECRET.trim(),
+  key_id: keyId.trim(),
+  key_secret: keySecret.trim(),
 });
 
 // ======================================================
@@ -74,13 +81,8 @@ router.post("/verify-payment", async (req, res) => {
     }
 
     const generatedSignature = crypto
-      .createHmac(
-        "sha256",
-        process.env.RAZORPAY_KEY_SECRET.trim()
-      )
-      .update(
-        `${razorpay_order_id}|${razorpay_payment_id}`
-      )
+      .createHmac("sha256", keySecret.trim())
+      .update(`${razorpay_order_id}|${razorpay_payment_id}`)
       .digest("hex");
 
     if (generatedSignature !== razorpay_signature) {

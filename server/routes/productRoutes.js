@@ -21,7 +21,7 @@ router.post("/", upload.single("image"), async (req, res) => {
       quantity: Number(req.body.quantity),
       seller: req.body.seller,
       location: req.body.location,
-      image: req.file ? req.file.filename : "",
+      image: req.file ? req.file.path : "",
     });
 
     await product.save();
@@ -82,7 +82,7 @@ router.put("/:id", upload.single("image"), async (req, res) => {
 
     // Update image only if a new image was uploaded
     if (req.file) {
-      updateData.image = req.file.filename;
+      updateData.image = req.file.path;
     }
 
     const product = await Product.findByIdAndUpdate(
